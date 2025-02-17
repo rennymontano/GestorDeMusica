@@ -1,25 +1,136 @@
 .grid-container {
-    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 64px 20px 20px 20px;
-    margin-top: 64px;
+    margin-top: 30px;
+
+    .card-header {
+        cursor: pointer;
+    }
+
+    .card-header:hover {
+        opacity: 0.8;
+    }
+
+    .list-chips {
+        .mat-mdc-chip {
+            margin: 5px 0px 10px 5px;
+        }
+    }
+}
+
+/* DETALLE*/
+.container-detalle {
+    padding: 64px 20px 20px 20px;
+    margin-top: 30px;
+
+    .list-chips {
+        .mat-mdc-chip {
+            margin: 5px 0px 10px 5px;
+        }
+    }
+
+    .content-desktop {
+        .img-desktop {
+            margin-right: 50px;
+        }
+    }
+
+    .grupo-valor {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+
+        .span-etiqueta {
+            margin-bottom: 5px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666666;
+        }
+
+        .span-value {
+            margin-bottom: 5px;
+        }
+
+        hr {
+            border: 1px solid #e0e0e0;
+        }
+    }
+}
+
+.card-header {
+    padding: 10px !important;
 }
 
 @media screen and (min-width: 1024px) {
     .grid-container {
+        display: grid;
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card-header {
+        justify-content: center;
+    }
+
+    .img-desktop {
+        display: block;
+    }
+
+    .img-mobile {
+        display: none;
+    }
+
+    .content-desktop {
+        display: flex;
+        justify-content: center;
     }
 }
 
 @media screen and (max-width: 768px) {
     .grid-container {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .img-mobile {
+        display: block;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .img-desktop {
+        display: none;
+    }
+
+    .content-desktop {
+        width: 100%;
     }
 }
 
 @media screen and (max-width: 480px) {
     .grid-container {
-        grid-template-columns: 1fr;
+        display: block;
+
+        .mdc-card {
+            margin-bottom: 20px;
+        }
+    }
+
+    .img-mobile {
+        display: block;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .img-desktop {
+        display: none;
+    }
+
+    .content-desktop {
+        width: 100%;
     }
 }

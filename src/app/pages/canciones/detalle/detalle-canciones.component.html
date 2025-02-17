@@ -1,0 +1,71 @@
+<mat-toolbar class="toolbar-menu" color="primary">
+    <div class="menu">
+        <button mat-icon-button (click)="redirect()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span *ngIf="!isLoading">{{ cancion.title }} ({{artista.name}})</span>
+        <span *ngIf="isLoading">Cargando detalle...</span>
+    </div>
+</mat-toolbar>
+
+<div class="container-detalle" *ngIf="!isLoading">
+    <mat-card *ngIf="cancion">
+        <mat-card-header class="card-header">
+            <mat-card-title>{{ cancion.title }} ({{ cancion.year }})</mat-card-title>
+        </mat-card-header>
+        <div class="img-mobile">
+            <img mat-card-image [src]="cancion.poster" alt="{{ cancion.title }}">
+        </div>
+        <mat-card-content>
+            <div class="content-desktop">
+                <div class="img-desktop">
+                    <img mat-card-image [src]="cancion.poster" alt="{{ cancion.title }}">
+                </div>
+                <div class="container-grupos">
+                    <div class="grupo-valor" style="margin-top: 15px;">
+                        <span class="span-etiqueta">Género</span>
+                        <mat-chip-list class="list-chips">
+                            <mat-chip *ngFor="let genero of cancion.genre">{{ genero }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="grupo-valor">
+                        <span class="span-etiqueta">Compañía discográfica</span>
+                        <mat-chip-list class="list-chips">
+                            <mat-chip *ngFor="let company of companias">{{ company.name }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="grupo-valor">
+                        <span class="span-etiqueta">País/Ciudad</span>
+                        <span class="span-value">{{artista.bornCity}}</span>
+                        <hr>
+                    </div>
+                    <div class="grupo-valor">
+                        <span class="span-etiqueta">Año</span>
+                        <span class="span-value">{{ cancion.year }}</span>
+                        <hr>
+                    </div>
+                    <div class="grupo-valor">
+                        <span class="span-etiqueta">Puntuación</span>
+                        <span class="span-value">{{ cancion.rating }}</span>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    
+        <mat-card-actions align="end">
+            <button mat-fab color="primary" (click)="editarCancion()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-fab color="warn" (click)="eliminarCancion()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+
+<div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Cargando detalles de la canción...</p>
+</div>
