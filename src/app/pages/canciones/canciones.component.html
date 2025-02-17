@@ -1,0 +1,19 @@
+<mat-toolbar>
+    <span>Canciones</span>
+  </mat-toolbar>
+  
+  <div class="grid-container">
+    <mat-card *ngFor="let cancion of canciones">
+      <mat-card-header>
+        <mat-card-title>{{ cancion.title }} ({{ cancion.year }})</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="{{ cancion.poster }}" alt="{{ cancion.title }}">
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip *ngFor="let genero of cancion.genre">{{ genero }}</mat-chip>
+        </mat-chip-list>
+        <p><strong>Duración:</strong> {{ cancion.duration }} segundos</p>
+        <p><strong>Rating:</strong> ⭐ {{ cancion.rating }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
