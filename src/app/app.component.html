@@ -1,1 +1,20 @@
-<router-outlet />
+<mat-drawer-container  class="drawer-container">
+
+    <mat-drawer #drawer mode="over" [opened]="isDrawerOpened">
+        <mat-toolbar class="toolbar-drawer" color="primary">
+            <span>Menu</span>
+            <button mat-icon-button (click)="closeDrawer()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-list>
+            <mat-list-item routerLink="/canciones">Canciones</mat-list-item>
+            <mat-list-item routerLink="/artistas">Artistas</mat-list-item>
+            <mat-list-item routerLink="/companias">Compañías discográficas</mat-list-item>
+        </mat-list>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <router-outlet />
+    </mat-drawer-content>
+</mat-drawer-container>

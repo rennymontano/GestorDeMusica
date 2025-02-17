@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MusicaService } from '@services/musica.service';
+import { MatCustomModule } from './modules/mat-custom/mat-custom.module';
+import { MatDrawer } from '@angular/material/sidenav';
+import { DrawerService } from '@services/drawer.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatCustomModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'GestorDeMusica';
+  @ViewChild(MatDrawer) drawer!: MatDrawer;  
+  isDrawerOpened = false;  
 
-  canciones: any[] = [];
+  constructor(private drawerService: DrawerService) {}
 
-  constructor(private musicService: MusicaService) {}
+  ngAfterViewInit(): void {
+    this.drawerService.setDrawer(this.drawer);
+  }
 
-  ngOnInit() {
-    this.musicService.getSongs().subscribe(data => {
-      this.canciones = data.songs;
-      console.log(this.canciones)
-    });
+  closeDrawer(): void {
+    this.drawerService.closeDrawer();
   }
 }
