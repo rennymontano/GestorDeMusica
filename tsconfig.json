@@ -5,6 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "@services/*":["src/app/services/*"],
+      "@modules/*":["src/app/modules/*"],
+      "@skeletons/*":["src/app/skeletons/*"],
       "@assets/*":["src/assets/*"],
     },
     "outDir": "./dist/out-tsc",

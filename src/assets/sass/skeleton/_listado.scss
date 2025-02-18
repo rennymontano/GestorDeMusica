@@ -1,0 +1,68 @@
+.skeleton-listado {
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 64px 20px 20px 20px;
+        margin-top: 30px;
+    }
+    
+    .card-skeleton {
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        padding: 20px;
+        animation: skeleton-loading 1.5s infinite ease-in-out;
+    }
+    
+    .skeleton-image {
+        height: 600px;
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    
+    .skeleton-title {
+        width: 70%;
+        height: 20px;
+        background-color: #e0e0e0;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    
+    .skeleton-chips {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .skeleton-chip {
+        width: 30%;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 16px;
+    }
+    
+    .skeleton-duration,
+    .skeleton-rating {
+        width: 60%;
+        height: 15px;
+        background-color: #e0e0e0;
+        margin-bottom: 8px;
+        border-radius: 4px;
+    }
+}
+
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: #f0f0f0;
+    }
+
+    50% {
+        background-color: #e0e0e0;
+    }
+
+    100% {
+        background-color: #f0f0f0;
+    }
+}

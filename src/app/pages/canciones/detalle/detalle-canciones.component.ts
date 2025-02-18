@@ -3,16 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DrawerService } from '@services/drawer.service';
 import { MusicaService } from '@services/musica.service';
 import { Song, SongDetails } from 'src/app/models/song';
-import { MatCustomModule } from 'src/app/modules/mat-custom/mat-custom.module';
+import { MatCustomModule } from '@modules/mat-custom/mat-custom.module';
 import { plainToInstance } from "class-transformer"
 import { Company } from 'src/app/models/company';
 import { Artist } from 'src/app/models/artist';
 import { forkJoin } from 'rxjs';
+import { SkeletonDetalleComponent } from '@skeletons/skeleton-detalle/skeleton-detalle.component';
 
 @Component({
   selector: 'app-detalle-canciones',
   standalone: true,
-  imports: [MatCustomModule],
+  imports: [MatCustomModule, SkeletonDetalleComponent],
   templateUrl: './detalle-canciones.component.html',
   styleUrl: './detalle-canciones.component.scss',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
