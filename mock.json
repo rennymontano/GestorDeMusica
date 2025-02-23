@@ -1,62 +1,6 @@
 {
   "songs": [
     {
-      "id": 1,
-      "title": "Who did you think i was",
-      "poster": "http://dummyimage.com/400x600.png/cc0000/ffffff",
-      "genre": [
-        "Pop",
-        "Rock",
-        "Alternative"
-      ],
-      "year": 2007,
-      "duration": 424,
-      "rating": 9.27,
-      "artist": 1
-    },
-    {
-      "id": 2,
-      "title": "Penny Lane",
-      "poster": "http://dummyimage.com/400x600.png/dddddd/000000",
-      "genre": [
-        "Rock",
-        "Pop",
-        "Chill"
-      ],
-      "year": 1967,
-      "duration": 303,
-      "rating": 8.99,
-      "artist": 2
-    },
-    {
-      "id": 3,
-      "title": "Hey Jude",
-      "poster": "http://dummyimage.com/400x600.png/5fa2dd/ffffff",
-      "genre": [
-        "Pop",
-        "Rock",
-        "Alternative"
-      ],
-      "year": 1974,
-      "duration": 206,
-      "rating": 6.25,
-      "artist": 2
-    },
-    {
-      "id": 4,
-      "title": "(I Can't Get No) Satisfaction",
-      "poster": "http://dummyimage.com/400x600.png/cc0000/ffffff",
-      "genre": [
-        "Rock",
-        "Pop",
-        "Heavy"
-      ],
-      "year": 1965,
-      "duration": 290,
-      "rating": 6.66,
-      "artist": 4
-    },
-    {
       "id": 5,
       "title": "Where the Streets Have No Name",
       "poster": "http://dummyimage.com/400x600.png/ff4444/ffffff",
@@ -177,7 +121,6 @@
       "img": "http://dummyimage.com/600x400.png/dddddd/000000",
       "rating": 9.03,
       "songs": [
-        1,
         6,
         12
       ]
@@ -189,10 +132,7 @@
       "birthdate": "19/04/1975",
       "img": "http://dummyimage.com/600x400.png/5fa2dd/000000",
       "rating": 2.43,
-      "songs": [
-        2,
-        3
-      ]
+      "songs": []
     },
     {
       "id": 3,
@@ -215,7 +155,6 @@
       "img": "http://dummyimage.com/600x400.png/4fa25d/000000",
       "rating": 4.37,
       "songs": [
-        4,
         8
       ]
     },
@@ -264,8 +203,6 @@
       "employees": 2000,
       "rating": 8.32,
       "songs": [
-        2,
-        3,
         12
       ]
     },
@@ -277,7 +214,6 @@
       "employees": 611,
       "rating": 8.19,
       "songs": [
-        4,
         8
       ]
     },

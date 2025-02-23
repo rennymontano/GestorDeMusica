@@ -6,7 +6,7 @@
             <button mat-icon-button (click)="redirect()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <span >{{ cancion.title }} ({{artista.name}})</span>
+            <span >{{ cancion.title }} {{artista?  '('+artista.name+')' : ''}}</span>
         </div>
     </mat-toolbar>
 

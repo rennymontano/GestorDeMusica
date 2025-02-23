@@ -12,6 +12,8 @@ import { SkeletonDetalleComponent } from '@skeletons/skeleton-detalle/skeleton-d
 import { DetalleInfoComponent } from './detalle-info/detalle-info.component';
 import { DetalleEditComponent } from './detalle-edit/detalle-edit.component';
 import Swal from 'sweetalert2'
+import { Store } from '@ngxs/store';
+import { MusicaActions } from 'src/app/store/musicas/musica.actions';
 
 @Component({
   selector: 'app-detalle-canciones',
@@ -28,37 +30,36 @@ export class DetalleCancionesComponent {
   artista: Artist = new Artist();
   isLoading: boolean = true;
   isEdit: boolean = false;
+  id: number;
 
   constructor(
     private route: ActivatedRoute,
     private musicaService: MusicaService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit() {
-    this.loadSongDetails();
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.detalleMusica(this.id);
   }
 
-  loadSongDetails() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    forkJoin({
-      cancion: this.musicaService.getSongById(id),
-      artista: this.musicaService.getArtistBySong(id),
-      companias: this.musicaService.getCompaniesBySong(id)
-    }).subscribe({
+  detalleMusica(id: number) {
+    this.isLoading = true;
+    this.musicaService.getSongDetails(id).subscribe({
       next: (res) => {
-        this.cancion = plainToInstance(Song, res.cancion);
-        this.artista = plainToInstance(Artist, res.artista);
-        this.companias = plainToInstance(Company, res.companias);
+        this.cancion = plainToInstance(Song, res?.song);
+        this.artista = plainToInstance(Artist, res?.artist);
+        this.companias = plainToInstance(Company, res?.companies);
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error("Error al cargar los detalles de la canción", err);
+      error: (e) => {
+        console.error(e);
         this.isLoading = false;
       }
-    });
+    })
   }
+
 
   deleteSong() {
     this.isLoading = true;
@@ -76,6 +77,7 @@ export class DetalleCancionesComponent {
     this.artista.songs = this.artista.songs.filter((x) => x != this.cancion.id)
     this.musicaService.updateArtist(this.artista.id, this.artista).subscribe({
       next: (res) => {
+
         this.modificarCompany();
       },
       error: (e) => {
@@ -94,6 +96,7 @@ export class DetalleCancionesComponent {
 
     forkJoin(requests).subscribe({
       next: () => {
+        this.store.dispatch(new MusicaActions.Refresh);
         this.isLoading = false;
         this.redirect();
       },
@@ -118,6 +121,8 @@ export class DetalleCancionesComponent {
 
   guardar(event: Company[]) {
     this.editarCancion();
+    this.detalleMusica(this.id);
+    this.store.dispatch(new MusicaActions.Refresh);
     this.companias = event.filter(company => company.songs.includes(this.cancion.id));
   }
 
@@ -138,6 +143,7 @@ export class DetalleCancionesComponent {
     }).then((res) => {
       if (res.isConfirmed) {
         this.deleteSong();
+
       }
     })
   }

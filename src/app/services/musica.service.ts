@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { Music } from '../models/music';
 import { Song, SongDetails } from '../models/song';
 import { Artist } from '../models/artist';
 import { Company } from '../models/company';
 import { environment } from 'src/environments/environment';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable({
   providedIn: 'root'
@@ -45,16 +46,28 @@ export class MusicaService {
     );
   }
 
-  getSongDetails(songId: number): Observable<SongDetails | null> {
-    return this.http.get<Music>(this.dataUrl).pipe(
-      map(data => {
-        const song = data.songs.find(s => s.id === songId);
-        if (!song) return null;
+  getSongDetails(songId: number): Observable<SongDetails> {
+    return forkJoin({
+      cancion: this.getSongById(songId),
+      artista: this.getArtistBySong(songId),
+      companias: this.getCompaniesBySong(songId)
+    }).pipe(
+      map(res => {
+        if (!res.cancion) return {
+          song: null,
+          artist: null,
+          companies: []
+        };
 
-        const artist = data.artists.find(a => a.id === song.artist);
-        const companies = data.companies.filter(c => c.songs.includes(songId));
-
-        return { song, artist, companies };
+        const cancion = plainToInstance(Song, res.cancion);
+        const artista = plainToInstance(Artist, res.artista);
+        const companias = res.companias.map(compania => plainToInstance(Company, compania));
+  
+        return {
+          song: cancion,
+          artist: artista,
+          companies: companias
+        };
       })
     );
   }

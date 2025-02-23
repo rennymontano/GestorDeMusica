@@ -13,7 +13,7 @@ export class Song {
 }
 
 export class SongDetails {
-    song: Song;
-    artist: Artist | undefined;
+    song: Song | null;
+    artist: Artist | null;
     companies: Company[];
   }
