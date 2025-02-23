@@ -1,0 +1,42 @@
+.content-form {
+    display: flex;
+    justify-content: center;
+    padding: 64px 20px 20px 20px;
+    margin-top: 50px;
+
+    .form {
+        display: flex;
+        flex-direction: column;
+
+        .field-form-chip {
+            
+        }
+
+        .list-chip {
+            margin-bottom: 20px;
+            .item-chip {
+                margin-right: 5px;
+                margin-top: 2px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .form {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .form {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .form {
+        width: 100%;
+    }
+}
+

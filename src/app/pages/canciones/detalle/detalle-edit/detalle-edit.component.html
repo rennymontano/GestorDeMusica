@@ -1,0 +1,69 @@
+<app-skeleton-editar *ngIf="isLoading" />
+
+<div class="content-form-edit" *ngIf="!isLoading">
+    <form class="form" [formGroup]="cancionForm">
+
+        <mat-form-field class="field-form-chip">
+            <mat-label>Género</mat-label>
+            <mat-select (selectionChange)="agregarGenero($event.value)">
+                <mat-option *ngFor="let genero of generosDisponibles" [value]="genero">{{ genero }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-chip-list class="list-chip">
+            <mat-chip class="item-chip" *ngFor="let genero of generosSeleccionados" [removable]="true"
+                (removed)="removerGenero(genero)">
+                {{ genero }} <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+
+        <mat-form-field class="field-form-chip">
+            <mat-label>Compañía Discográfica</mat-label>
+            <mat-select (selectionChange)="agregarCompania($event.value)">
+                <mat-option *ngFor="let compania of companiasDisponibles" [value]="compania">{{ compania.name
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-chip-list class="list-chip">
+            <mat-chip class="item-chip" *ngFor="let compania of companiasSeleccionadas" [removable]="true"
+                (removed)="removerCompania(compania)">
+                {{ compania.name }} <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+
+        <mat-form-field class="field-form">
+            <mat-label>Año</mat-label>
+            <input matInput type="number" formControlName="anio" placeholder="Ingrese el año" min="1900"
+                max="{{ anioActual }}" (input)="validarAnio()">
+            <mat-error *ngIf="cancionForm.controls['anio'].hasError('min')">
+                El año no puede ser menor a 1900.
+            </mat-error>
+            <mat-error *ngIf="cancionForm.controls['anio'].hasError('max')">
+                El año no puede ser mayor a {{ anioActual }}.
+            </mat-error>
+            <mat-error *ngIf="cancionForm.controls['anio'].hasError('maxlength')">
+                El año no puede tener más de 4 dígitos.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field-form">
+            <mat-label>Pais/Ciudad</mat-label>
+            <input matInput formControlName="pais" placeholder="Ingrese el país">
+        </mat-form-field>
+
+        <mat-form-field class="field-form">
+            <mat-label>Puntuación</mat-label>
+            <input matInput type="number" formControlName="rating" min="0" max="10">
+        </mat-form-field>
+    </form>
+    <div class="content-btn">
+        <button mat-raised-button color="primary" type="button" (click)="onCancelarEdit()" [disabled]="cancionForm.invalid">
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" type="button"  (click)="guardar()" [disabled]="cancionForm.invalid">
+            Guardar
+        </button>
+    </div>
+
+</div>

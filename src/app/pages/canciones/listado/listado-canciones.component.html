@@ -24,3 +24,8 @@
         </mat-card-content>
     </mat-card>
 </div>
+<div class="btn-action" *ngIf="!isLoading">
+    <button mat-fab color="primary" (click)="nuevaCancion()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

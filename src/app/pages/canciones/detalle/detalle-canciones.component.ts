@@ -9,27 +9,31 @@ import { Company } from 'src/app/models/company';
 import { Artist } from 'src/app/models/artist';
 import { forkJoin } from 'rxjs';
 import { SkeletonDetalleComponent } from '@skeletons/skeleton-detalle/skeleton-detalle.component';
+import { DetalleInfoComponent } from './detalle-info/detalle-info.component';
+import { DetalleEditComponent } from './detalle-edit/detalle-edit.component';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-detalle-canciones',
   standalone: true,
-  imports: [MatCustomModule, SkeletonDetalleComponent],
+  imports: [MatCustomModule, SkeletonDetalleComponent, DetalleInfoComponent, DetalleEditComponent],
   templateUrl: './detalle-canciones.component.html',
   styleUrl: './detalle-canciones.component.scss',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DetalleCancionesComponent {
   detalleCancion: SongDetails = new SongDetails();
   cancion: Song = new Song();
   companias: Company[] = [];
   artista: Artist = new Artist();
-  isLoading: boolean =  true;
+  isLoading: boolean = true;
+  isEdit: boolean = false;
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private musicaService: MusicaService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadSongDetails();
@@ -56,19 +60,85 @@ export class DetalleCancionesComponent {
     });
   }
 
+  deleteSong() {
+    this.isLoading = true;
+    this.musicaService.deleteSong(this.cancion.id).subscribe({
+      next: (res) => {
+        this.modificarArtist();
+      },
+      error: (e) => {
+        console.error(e)
+      }
+    })
+  }
+
+  modificarArtist() {
+    this.artista.songs = this.artista.songs.filter((x) => x != this.cancion.id)
+    this.musicaService.updateArtist(this.artista.id, this.artista).subscribe({
+      next: (res) => {
+        this.modificarCompany();
+      },
+      error: (e) => {
+        console.error(e)
+      }
+    })
+
+  }
+
+  modificarCompany() {
+    console.log(this.companias)
+    const requests = this.companias.map((x: any) => {
+      x.songs = x.songs.filter((f: any) => f != this.cancion.id);
+      return this.musicaService.updateCompanies(x.id, x);
+    });
+
+    forkJoin(requests).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.redirect();
+      },
+      error: (e) => {
+        console.error(e);
+      }
+    });
+  }
+
 
   redirect() {
     this.router.navigate(['/']);
   }
 
   editarCancion() {
-    this.router.navigate(['/editar', this.cancion.id]);
+    this.isEdit = !this.isEdit
+  }
+
+  cancelar(event: any) {
+    this.editarCancion();
+  }
+
+  guardar(event: Company[]) {
+    this.editarCancion();
+    this.companias = event.filter(company => company.songs.includes(this.cancion.id));
   }
 
   eliminarCancion() {
-    if (confirm('¿Seguro que quieres eliminar esta canción?')) {
-      alert(`Canción "${this.cancion.title}" eliminada`);
-      this.router.navigate(['/canciones']);
-    }
+    Swal.fire({
+      title: "Eliminar Canción",
+      text: "¿Estás seguro de que deseas eliminar esta canción?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: '#F44336',
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#003d3d',
+      confirmButtonText: 'Confirmar',
+      customClass: {
+        title: 'swal-title-custom',
+        icon: 'swal-icon-custom'
+      }
+    }).then((res) => {
+      if (res.isConfirmed) {
+        this.deleteSong();
+      }
+    })
   }
 }

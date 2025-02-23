@@ -18,51 +18,32 @@
             <div class="img-mobile">
                 <img mat-card-image [src]="cancion.poster" alt="{{ cancion.title }}">
             </div>
-            <mat-card-content>
+            <mat-card-content class="content-card">
                 <div class="content-desktop">
                     <div class="img-desktop">
                         <img mat-card-image [src]="cancion.poster" alt="{{ cancion.title }}">
                     </div>
-                    <div class="container-grupos">
-                        <div class="grupo-valor" style="margin-top: 15px;">
-                            <span class="span-etiqueta">Género</span>
-                            <mat-chip-list class="list-chips">
-                                <mat-chip *ngFor="let genero of cancion.genre">{{ genero }}</mat-chip>
-                            </mat-chip-list>
-                        </div>
-                        <div class="grupo-valor">
-                            <span class="span-etiqueta">Compañía discográfica</span>
-                            <mat-chip-list class="list-chips">
-                                <mat-chip *ngFor="let company of companias">{{ company.name }}</mat-chip>
-                            </mat-chip-list>
-                        </div>
-                        <div class="grupo-valor">
-                            <span class="span-etiqueta">País/Ciudad</span>
-                            <span class="span-value">{{artista.bornCity}}</span>
-                            <hr>
-                        </div>
-                        <div class="grupo-valor">
-                            <span class="span-etiqueta">Año</span>
-                            <span class="span-value">{{ cancion.year }}</span>
-                            <hr>
-                        </div>
-                        <div class="grupo-valor">
-                            <span class="span-etiqueta">Puntuación</span>
-                            <span class="span-value">{{ cancion.rating }}</span>
-                            <hr>
-                        </div>
+                    <div class="container-grupos" *ngIf="!isEdit">
+                        <app-detalle-info [cancion]="cancion" [artista]="artista" [companias]="companias"/>
                     </div>
+                    <div class="container-grupos" *ngIf="isEdit">
+                        <app-detalle-edit [cancion]="cancion" [artista]="artista" [companias]="companias"
+                        (onCancelar)="cancelar($event)"
+                        (onGuardar)="guardar($event)"/>
+                    </div>
+                    
+                </div>
+                <div class="btn-action-edit" *ngIf="!isLoading && !isEdit">
+                    <button mat-fab color="primary" (click)="editarCancion()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-fab color="warn" (click)="eliminarCancion()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
                 </div>
             </mat-card-content>
-
-            <mat-card-actions align="end">
-                <button mat-fab color="primary" (click)="editarCancion()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-fab color="warn" (click)="eliminarCancion()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-card-actions>
         </mat-card>
+
     </div>
 </ng-container>
+

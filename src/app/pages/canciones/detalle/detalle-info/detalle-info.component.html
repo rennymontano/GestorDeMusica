@@ -1,0 +1,27 @@
+<div class="grupo-valor" style="margin-top: 15px;">
+    <span class="span-etiqueta">Género</span>
+    <mat-chip-list class="list-chips">
+        <mat-chip *ngFor="let genero of cancion.genre">{{ genero }}</mat-chip>
+    </mat-chip-list>
+</div>
+<div class="grupo-valor">
+    <span class="span-etiqueta">Compañía discográfica</span>
+    <mat-chip-list class="list-chips">
+        <mat-chip *ngFor="let company of companias">{{ company.name }}</mat-chip>
+    </mat-chip-list>
+</div>
+<div class="grupo-valor">
+    <span class="span-etiqueta">País/Ciudad</span>
+    <span class="span-value">{{artista.bornCity}}</span>
+    <hr>
+</div>
+<div class="grupo-valor">
+    <span class="span-etiqueta">Año</span>
+    <span class="span-value">{{ cancion.year }}</span>
+    <hr>
+</div>
+<div class="grupo-valor">
+    <span class="span-etiqueta">Puntuación</span>
+    <span class="span-value">{{ cancion.rating }}</span>
+    <hr>
+</div>

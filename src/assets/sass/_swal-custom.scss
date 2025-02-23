@@ -1,0 +1,28 @@
+.swal-title-custom {
+    font-size: 30px !important;
+    margin: 0  !important;
+    padding: .3em 1em 0 !important;
+  }
+
+  .swal-icon-custom {
+    font-size: 15px !important;
+    margin: 2em auto .6em !important;
+  }
+
+  mat-list-item {
+    cursor: pointer !important;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0, 61, 61, 0.1) !important;
+    }
+  }
+
+  .active-link {
+    font-weight: bold;
+    background-color: rgba(0, 61, 61, 0.2) !important;
+    border-left: 4px solid #003d3d;
+    border-bottom: none !important;
+    padding-left: 12px;
+  }
+  

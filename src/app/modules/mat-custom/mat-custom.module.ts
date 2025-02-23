@@ -29,7 +29,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDatepickerModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule,
+    MatToolbarModule
   ],
   exports: [
     CommonModule,

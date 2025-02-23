@@ -1,0 +1,83 @@
+
+<mat-toolbar class="toolbar-menu" color="primary">
+  <div class="menu">
+    <button mat-icon-button (click)="redirect()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Nueva canción</span>
+  </div>
+</mat-toolbar>
+
+<app-skeleton-nueva *ngIf="isLoading"/>
+
+<div class="content-form" *ngIf="!isLoading">
+  <form class="form" [formGroup]="cancionForm" (ngSubmit)="guardar()">
+    <mat-form-field class="field-form">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="titulo" placeholder="Ingrese el título">
+    </mat-form-field>
+
+    <mat-form-field class="field-form">
+      <mat-label>Artista</mat-label>
+      <mat-select formControlName="artistas">
+        <mat-option *ngFor="let artista of artistas" [value]="artista.id">{{ artista.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field-form-chip">
+      <mat-label>Género</mat-label>
+      <mat-select (selectionChange)="agregarGenero($event.value)">
+        <mat-option *ngFor="let genero of generosDisponibles" [value]="genero">{{ genero }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-chip-list class="list-chip">
+      <mat-chip class="item-chip" *ngFor="let genero of generosSeleccionados" [removable]="true" (removed)="removerGenero(genero)">
+        {{ genero }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
+    <mat-form-field class="field-form-chip">
+      <mat-label>Compañía Discográfica</mat-label>
+      <mat-select (selectionChange)="agregarCompania($event.value)">
+        <mat-option *ngFor="let compania of companiasDisponibles" [value]="compania">{{ compania.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-chip-list  class="list-chip">
+      <mat-chip class="item-chip" *ngFor="let compania of companiasSeleccionadas" [removable]="true"
+        (removed)="removerCompania(compania)">
+        {{ compania.name }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
+    <mat-form-field class="field-form">
+      <mat-label>Año</mat-label>
+      <input matInput type="number" formControlName="anio" placeholder="Ingrese el año" min="1900"
+        max="{{ anioActual }}" (input)="validarAnio()">
+      <mat-error *ngIf="cancionForm.controls['anio'].hasError('min')">
+        El año no puede ser menor a 1900.
+      </mat-error>
+      <mat-error *ngIf="cancionForm.controls['anio'].hasError('max')">
+        El año no puede ser mayor a {{ anioActual }}.
+      </mat-error>
+      <mat-error *ngIf="cancionForm.controls['anio'].hasError('maxlength')">
+        El año no puede tener más de 4 dígitos.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field-form">
+      <mat-label>Duración (segundos)</mat-label>
+      <input matInput type="number" formControlName="duracion">
+    </mat-form-field>
+
+    <mat-form-field class="field-form">
+      <mat-label>Puntuación</mat-label>
+      <input matInput type="number" formControlName="rating" min="0" max="10">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="cancionForm.invalid">
+      Guardar
+    </button>
+  </form>
+</div>

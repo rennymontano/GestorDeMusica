@@ -19,8 +19,22 @@
     }
 }
 
+.btn-action {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+
+    .mat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 35px;
+    }
+}
+
+
 /* DETALLE*/
 .container-detalle {
+    position: relative;
     padding: 64px 20px 20px 20px;
     margin-top: 30px;
 
@@ -34,6 +48,10 @@
         .img-desktop {
             margin-right: 50px;
         }
+    }
+
+    .content-card {
+        position: relative;
     }
 
     .grupo-valor {
@@ -58,10 +76,24 @@
     }
 }
 
+.btn-action-edit {
+
+    button {
+        margin-right: 5px;
+    }
+
+    .mat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 35px;
+    }
+}
+
+
 .card-header {
     padding: 10px !important;
 }
-  
+
 
 @media screen and (min-width: 1024px) {
     .grid-container {
@@ -84,6 +116,16 @@
     .content-desktop {
         display: flex;
         justify-content: center;
+
+        .container-grupos {
+            min-width: 400px;
+            max-width: 400px;
+        }
+    }
+    .btn-action-edit {
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
     }
 }
 
@@ -108,11 +150,14 @@
     .content-desktop {
         width: 100%;
     }
+    .btn-action-edit {
+        position: relative;
+    }
 }
 
 @media screen and (max-width: 480px) {
     .grid-container {
-        display: block;
+        display: block !important;
 
         .mdc-card {
             margin-bottom: 20px;
@@ -134,5 +179,9 @@
     .content-desktop {
         width: 100%;
     }
+    .btn-action-edit {
+        position: relative;
+        margin-top: 10px;
+        float: right;
+    }
 }
-
